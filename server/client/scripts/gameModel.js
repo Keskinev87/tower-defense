@@ -1,48 +1,23 @@
- class UserInterface {
-     constructor() {
-        this.uiCanvas = document.getElementById('ui-layer');
-        this.uictx = this.uiCanvas.getContext('2d');
-        this.width = this.uiCanvas.width;
-        this.height = this.uiCanvas.height;
-     }
+class UserInterface {
+    constructor() {
 
-     init() {
+    }
 
-     }
+    showMenu(){
 
-     drawMenu() {
+    }
+}
 
-     }
-
-     drawStartBtn() {
-        this.uictx.fillRect(this.width * 0.40,  this.height * 0.1, this.width * 0.20, this.height * 0.20);
-     }
-
-     drawInstructionsBtn() {
-        this.uictx.fillRect(this.width * 0.40,  this.height * 0.4, this.width * 0.20, this.height * 0.20);
-     }
-
-     drawSettingsBtn() {
-        this.uictx.fillRect(this.width * 0.40,  this.height * 0.7, this.width * 0.20, this.height * 0.20);
-     }
-
-     drawTowers() {
-
-     }
- }
- 
- 
- class Game {
+class Game {
 
     constructor() {
         //size of the canvases 
         this.gameArea = document.getElementById('gameArea');
         this.gameCanvas = document.getElementById('game-layer');
         this.backgroundCanvas = document.getElementById('background-layer')
-        this.uiCanvas = document.getElementById('ui-layer')
+        this.uiDiv = document.getElementById('ui-layer')
         //drawing contexts
         this.bgrctx = this.backgroundCanvas.getContext('2d')
-        this.uictx = this.uiCanvas.getContext('2d');
         this.ctx = this.gameCanvas.getContext('2d')
         //general variables for the game
         this.fps = 60;
@@ -74,10 +49,10 @@
         this.gameArea.style.marginTop = (-newHeight / 2) + 'px';
         this.gameArea.style.marginLeft = (-newWidth / 2) + 'px';
     
-        this.gameCanvas.width = this.backgroundCanvas.width = this.uiCanvas.width = this.width = newWidth;
-        this.gameCanvas.height = this.backgroundCanvas.height = this.uiCanvas.height = this.height = newHeight;
-        console.log(this.gameCanvas.offsetLeft)
-        console.log(this.gameCanvas.offsetTop)
+        this.gameCanvas.width = this.backgroundCanvas.width = this.width = newWidth;
+        this.gameCanvas.height = this.backgroundCanvas.height = this.height = newHeight;
+        
+        // this.uiDiv.style.height = this.height * 0.05 + 'px'
             
     }
 

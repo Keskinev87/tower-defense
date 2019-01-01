@@ -1,31 +1,4 @@
-
-function startNewGame() {
-
-    //////////////////////////////////////////////
-    ////////////I. PRELOADING ASSETS//////////////
-    //////////////////////////////////////////////
-    
-    //1. Create new game 
-        
-    // Resize the canvases
-        //game.resizeGame()
-    //2. Load and set maps
-
-    //3. Load and set levels
-
-    //3.1. Set waves for levels
-        //game.setWaves()
-    //4. Load and set towers
-
-    //5. Load and set monsters
-
-    //6. Load and set paths
-        //game.setPath()
-    //7. Load and set user data
-
-    //8. Load audio
-
-
+function gameInit() {
 
     //////////////////////////////////////////////
     ////////////II. GENERAL GAME FLOW/////////////
@@ -33,13 +6,14 @@ function startNewGame() {
 
     //1.Create a new game
     let game = new Game();
+    game.resizeGame();
     let level = new Level(0)
-    let ui;
+   
     
     level.load().then(() => console.log('Ok'))
     console.log(level)
 
-    game.resizeGame()
+   
     console.log(new Level(0))
     game.createNewLevel().then((level => {
         console.log(level)
