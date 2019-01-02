@@ -27,7 +27,7 @@ class Level {
         return new Promise((resolve, reject) => {
             let promises =[];
             promises.push(this.getWaves(), this.getAvailableTowers(), this.getMap()) //TODO - add the getMap
-            Promise.all(promises).then(() => resolve(true))
+            Promise.all(promises).then(() => resolve())
                 .catch(() => {
                     reject("Loading level failed")
                 })
@@ -39,7 +39,7 @@ class Level {
         return new Promise((resolve, reject) => {
             data.getWaves(this.number).then(waves => {
                 this.waves = waves
-                resolve(true)
+                resolve()
             }).catch(error => {
                 reject(error)
             })
@@ -48,17 +48,17 @@ class Level {
 
     getMap() {
         return new Promise((resolve, reject) => {
-            let map = new Map() // TODO - generate a map via data.js - get the map with maps[this.number]
+            let map = new Map();
             if(map) {
+                this.map = map;
                 map.getPath().then((path) => {
-                    console.log(path)
                     this.path = path
-                    resolve(true)
+                    resolve()
                 }).catch(() => {
-                    reject()
+                    reject();
                 })
             } else {
-                reject("No map for this level found")
+                reject();
             }
         })
     }
@@ -127,40 +127,18 @@ class Level {
 // the map object        
 class Map {
 
-    constructor(width, height, tsize, tiles, image){
-        this.cols = width; //the width of the map in columns
-        this.rows = height; // the height of the map in rows
-        this.tsize = tsize; //the size of each tile
-        this.tiles = tiles; //matrix containing the tiles
-        this.tileAtlas = image; //the sprite for the map
+    constructor(){
+        this.bgrCanvas = document.getElementById('background-layer');
+        this.bgrctx = this.bgrCanvas.getContext('2d');
+        this.width = this.bgrCanvas.width; 
+        this.height = this.bgrCanvas.height;
+        this.image = new Image();
+        this.image.src = './images/map.png';
     }
     
 
-    getTile (row, col) {
-        return this.tiles[row][col];
-    }
-
-    draw (ctx) {
-        console.log("trying to draw")
-        for (let r = 0; r < this.rows; r++) {
-            for (var c = 0; c < this.cols; c++) {
-            var tile = this.getTile(r, c);
-            if (tile !== 0) { // 0 => empty tile
-                console.log("drawing")
-                ctx.drawImage(
-                this.tileAtlas, // image
-                (tile - 1) * this.tsize, // source x
-                0, // source y
-                this.tsize, // source width
-                this.tsize, // source height
-                c * this.tsize, // target x
-                r * this.tsize, // target y
-                this.tsize, // target width
-                this.tsize // target height
-                );
-            }
-            }
-        }
+    drawMap () {
+        this.bgrctx.drawImage(this.image, 0, 0, this.width, this.height);
     }
 
     //TODO - create different paths for the different levels and pass them when constructing a new Map
