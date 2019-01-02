@@ -1,111 +1,93 @@
-function gameInit() {
+var game;
+var level = undefined;
+var ui;
 
-    //////////////////////////////////////////////
-    ////////////II. GENERAL GAME FLOW/////////////
-    //////////////////////////////////////////////
+function clicked(e) {
+    console.log(e)
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
 
-    //1.Create a new game
-    let game = new Game();
-    game.resizeGame();
-    let level = new Level(0)
-   
-    
-    level.load().then(() => console.log('Ok'))
-    console.log(level)
+class Game {
 
-   
-    console.log(new Level(0))
-    game.createNewLevel().then((level => {
-        console.log(level)
-        level.load().then(levelLoaded => {
-            if(levelLoaded){
-                level = levelLoaded
-            }
+    constructor(width, height) {
+
+        this.width = width;
+        this.height = height;
+        //the current level
+        this.currentLevel = 0;
+    }
+
+    startGame() {
+        this.createNewLevel().then(() => {
+            level.load().then(() => {
+                ui.showGameArea();
+                console.log(level.map);
+                level.map.drawMap();
+                level.releaseNewWave();
+            })
+        }) 
+    }
+
+    logWH() {
+        console.log(this.width)
+        console.log(this.height)
+    }
+
+    createNewLevel () {
+        return new Promise((resolve, reject) => {
+            level = new Level(this.currentLevel)
+            if(level)
+                resolve();
+            else
+                reject();
             
         })
-    }))
-    
-    
-    //2.Resize the canvas according to the browser
-    
-    //3.Set the current level
-    //TODO - draw the map, set the path, set the waves, set the available towers 
-        //3.1. Draw the map on the background canvas
-        //TODO drawMap()
-        //3.2. Set the path for the monsters
-        // game.setPath()
-        //3.3. Set the available towers
-        // game.setAvailableTowers()
-        //3.4. Draw the available towers on the ui layer
-        //TODO game.drawUiTowers()
-        //3.5. Set the waves for the level
-        //TODO game.setWaves()
-        //3.6. Draw the metrics UI on the screen
-        //TODO drawMetrics()
-        //draw the towers, that the user built till now
-    // let tower = new Tower(game.backgroundCanvas.width, game.backgroundCanvas.height);
-    // tower.draw({x:game.backgroundCanvas.width * 0.25, y: game.backgroundCanvas.height * 0.47}, game.bgrctx)
-    // tower.drawRange(game.bgrctx)
-    //set the waives for the level
-    // TODO
-    // // game.setWaves()
-    // game.releaseNewWave()
-    
-    // resizeGame() //canvas.js: resize the canvas according to the screen of the player
-    // window.addEventListener('resize', resizeGame, false); //canvas.js: on window change, resize the canvas
-    //INSERT LOADER HERE
-    
-    // the canvas layers
-    // let gameCanvas = document.getElementById('game-layer');
-    // let backgroundCanvas = document.getElementById('background-layer')
-    // let uiCanvas = document.getElementById('ui-layer')
+    }    
+}
 
-    //the game elements
-    // let path = new Path(backgroundCanvas);
-    // let path2 = createPathAsArray();
-    // let map = new Map(16, 24 , 20, mapTiles, tileAtlas);
-    // let waveOfMonsters = 1;
-    
+class UserInterface {
 
-    //draw the background map 
-    // if (backgroundCanvas.getContext) {
-        // let bgrctx = backgroundCanvas.getContext('2d');
-        
-        //TODO: DRAW THE MAP
-       
-        //draw the monster path
-        // path.drawPath(bgrctx, backgroundCanvas);
-        // let tower = new Tower(backgroundCanvas.width, backgroundCanvas.height);
-        // tower.draw({x:backgroundCanvas.width * 0.25, y: backgroundCanvas.height * 0.47}, bgrctx)
-    // }
+    constructor() {
+        this.gameArea = document.getElementById('gameArea');
+        this.gameLayer = document.getElementById('game-layer');
+        this.backgroundLayer = document.getElementById('background-layer');
+        this.menu = document.getElementById('menu');
+        this.statusBar = document.getElementById('status-bar');
+        this.moneyCounter = document.getElementById('money').innerHTML;
+        this.waveCounter = document.getElementById('wave').innerHTML;
+    }
 
-    //draw the interface
+    showGameArea() {
+        this.gameArea.style.visibility = '';
+        this.gameLayer.style.visibility ='';
+        this.backgroundLayer.style.visibility='';
+        this.hideMenu();
+        this.showStatusBar();
+    }
 
-    // if (uiCanvas.getContext) {
-    //     // let uictx = uiCanvas.getContext('2d');
-    // }
-    
-    //the game
-    // if (gameCanvas.getContext) {
-    //     // start the animation
-    //     animate();
+    showMenu() {
+        //initialize the game
+        this.menu.style.visibility = '';
+    }
 
-    //     function animate() {
-    //         game.ctx.clearRect(0,0,game.width, game.height);
-           
-    //         // drawFrame(percent);
-            
-           
-    //         setTimeout(function () {
-    //             requestAnimationFrame(animate);
-    //         }, 1000 / fps);
-    //     }
+    hideMenu() {
+        this.menu.style.visibility = 'hidden';
+    }
 
-    //     function releaseNewWave() {
-            
-    //     }
+    showStatusBar() {
+        this.statusBar.style.visibility = '';
+    }
 
-    // }
+    hideStatusBar() {
+        this.statusBar.style.visibility = 'hidden';
+    }
 
-    
+    updateStatusMoney(value) {
+        this.moneyCounter += value;
+    }
+
+    updateWave(value) {
+        this.waveCounter += value;
+    }
 }
