@@ -41,6 +41,7 @@ body{
   }
 
   .tower-nest {
+    /* the places available for tower building */
     position: absolute;
     border-radius: 50%;
     top: 50%;
@@ -48,6 +49,20 @@ body{
     width: 6%;
     height: 6%;
     border: 1px solid red;
+    z-index: 4;
+  }
+
+  .tower-ui {
+    /* the tower is in the popup. The user has to click to build it */
+    display: inline;
+    padding: 1%;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+  }
+
+  .tower {
+    /*the tower is built  */
+    position: absolute;
     z-index: 4;
   }
 
@@ -70,22 +85,19 @@ body{
   
   /* The actual popup */
   .popup .popup-menu {
-    visibility: hidden;
-    width: 160px;
     background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 8px 0;
     position: absolute;
     z-index: 1;
     bottom: 125%;
     left: 50%;
-    margin-left: -80px;
+    /* margin-left: -80px; */
   }
   
   /* Popup arrow */
-  .popup .popup-menu::after {
+  /* .popup .popup-menu::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -94,23 +106,8 @@ body{
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
-  }
+  } */
+
   
-  /* Toggle this class - hide and show the popup */
-  .popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 0.5s;
-    animation: fadeIn 0.5s;
-  }
   
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-  }
   /* POPUP END */
