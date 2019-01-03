@@ -5,18 +5,12 @@ class Level {
         this.width;
         this.height;
         this.ctx;
-        this.map;
-        this.path; //the map for the level
         this.waves; //array with the waves for the level
         this.wave; // the current wave(the array)
         this.currentWaveNumber = 0;  //the number of the current wave with monsters
-        this.availableTowers;  //array with available towers
         this.builtTowers; //array with the built towers.
         this.releaseStage = 0;  // used to release the monsters in several frames
         this.monstersLeft;  // how many monsters from the current wave are left - used to stop iterating when they are over.
-        this.availableTowers; //all towers that are available for this stage of the game
-        this.towers;  //all towers, that are built by the player
-
     }
 
     load() {
@@ -26,10 +20,11 @@ class Level {
         this.height = this.gameCanvas.height;
         return new Promise((resolve, reject) => {
             let promises =[];
-            promises.push(this.getWaves(), this.getAvailableTowers(), this.getMap()) //TODO - add the getMap
-            Promise.all(promises).then(() => resolve())
+            promises.push(this.getWaves()) //TODO - add the getMap
+            Promise.all(promises)
+                .then(() => resolve())
                 .catch(() => {
-                    reject("Loading level failed")
+                    reject()
                 })
         })
         
@@ -42,34 +37,6 @@ class Level {
                 resolve()
             }).catch(error => {
                 reject(error)
-            })
-        })
-    }
-
-    getMap() {
-        return new Promise((resolve, reject) => {
-            let map = new Map();
-            if(map) {
-                this.map = map;
-                map.getPath().then((path) => {
-                    this.path = path
-                    resolve()
-                }).catch(() => {
-                    reject();
-                })
-            } else {
-                reject();
-            }
-        })
-    }
-
-    getAvailableTowers() {
-        return new Promise((resolve, reject) => {
-            data.getTowers(this.number).then(towers => {
-                this.towers = towers;
-                resolve(true)
-            }).catch(() => {
-                reject(false )
             })
         })
     }
@@ -101,7 +68,7 @@ class Level {
                     curMonster.advance();
                     
                     if(curMonster.progress < 1000) {
-                        let currentPos = {x: this.path[curMonster.progress].x * this.width, y: this.path[curMonster.progress].y * this.height} 
+                        let currentPos = {x: map.path[curMonster.progress].x * this.width, y: map.path[curMonster.progress].y * this.height} 
                         curMonster.draw(currentPos, this.height, this.ctx);
                     } else{     
                         this.wave[i] = null;
@@ -120,7 +87,7 @@ class Level {
         
     }
 
-    //get a map for the level
+    
     
 
 }
@@ -132,13 +99,60 @@ class Map {
         this.bgrctx = this.bgrCanvas.getContext('2d');
         this.width = this.bgrCanvas.width; 
         this.height = this.bgrCanvas.height;
+        this.path;
         this.image = new Image();
         this.image.src = './images/map.png';
+        this.towerNestsCoords; //used to generate the tower nests along the card
+        this.availableTowers=[]; //all towers that are available for this map
+        this.towers;  //all towers, that are built by the player
     }
     
+    load() {
+        return new Promise((resolve, reject) => {
+            let promises =[];
+            promises.push(this.getTowerNests(), this.getAvailableTowers(), this.getPath()) //TODO - add the getMap
+            Promise.all(promises).then(() => resolve())
+                .catch((error) => {
+                    reject(error);
+                })
+        })
+    }
 
     drawMap () {
         this.bgrctx.drawImage(this.image, 0, 0, this.width, this.height);
+    }
+
+    drawTowerNests() {
+        ui.placeTowerNests(this.towerNestsCoords, this.availableTowers);
+    }
+
+    getTowerNests() {
+        return new Promise((resolve, reject) => {
+            data.getTowerNests(0).then((coords) => {
+                this.towerNestsCoords = coords;
+                resolve();
+            }).catch(() => {
+                reject("Error in tower nests");
+            })
+        })
+        
+    }
+
+    getAvailableTowers() {
+        return new Promise((resolve, reject) => {
+            data.getAvailableTowers([0]).then(towers => {
+                for (let towerType of towers) {
+                    console.log("Tower:")
+                    console.log(towerType)
+                    this.availableTowers.push(new Tower(towerType))
+                };
+                console.log("Available towers");
+                console.log(this.availableTowers)
+                resolve();
+            }).catch(() => {
+                reject("Error in available towers");
+            })
+        })
     }
 
     //TODO - create different paths for the different levels and pass them when constructing a new Map
@@ -192,8 +206,13 @@ class Map {
                 }
                 tempPath.push(xy)
             }
-
-            tempPath ? resolve(tempPath) : reject("No path found for this level")
+            
+            if (tempPath) {
+                this.path = tempPath;
+                resolve();
+            } else {
+                reject("Error in path");
+            }
         })
          
     }
@@ -232,33 +251,52 @@ class Monster {
 
 class Tower {
     
-    constructor(damage, range, speed, skin, canvasWidth) {
-        this.damage = damage;
-        this.range = range;
-        this.speed = speed;
-        this.skin = skin;
-        this.width = canvasWidth;
-        this.towerWidth = Math.floor(canvasWidth * 0.06)
+    constructor(type) {
+        this.type = type;
+        this.gameArea = document.getElementById('gameArea');
+        this.gameCanvas = document.getElementById('game-layer');
+        this.width = this.gameCanvas.width;
+        this.towerWidth = this.width * 0.1;
         this.center;
+
+        switch (type) {
+            case 'archer': {
+                this.damage = 10;
+                this.range = 0.1;
+                this.speed = 15;
+                this.sprite = 'images/stone-tower.png';
+                this.uiImage = new Image();
+                this.uiImage.src = 'images/stone-tower.png';
+                this.uiImage.id = this.type;
+                this.uiImage.width = this.width * 0.08 ;
+                this.uiImage.classList.add('tower-ui');
+            }
+        }
+        
+       
     }
     
 
-    draw (point, ctx) {
-        
-        this.center = point;
-        let startPt = {x: point.x - this.towerWidth / 2, y: point.y - this.towerWidth/2}
-        ctx.strokeRect(startPt.x, startPt.y, this.towerWidth, this.towerWidth)
-        
+    build (point) {
+        let towerImg = document.createElement('img')
+        towerImg.src = this.sprite;
+        towerImg.classList.add('tower');
+        towerImg.style.top = point.top;
+        towerImg.style.left = point.left;
+        towerImg.style.width = Math.floor(this.width * 0.08) + 'px';
+
+        this.gameArea.append(towerImg);
+
+         
+        // this.center = point;
+        // let startPt = {x: point.x - this.towerWidth / 2, y: point.y - this.towerWidth/2}
+        // ctx.strokeRect(startPt.x, startPt.y, this.towerWidth, this.towerWidth)
     }
     
     drawRange (ctx) {
         ctx.beginPath()
         ctx.arc(this.center.x, this.center.y, this.range * this.width, 0, 2 * Math.PI, true)
         ctx.stroke()
-    }
-
-    drawUI (point, ctx, width) {
-        console.log("Draw UI")
     }
 
 }
