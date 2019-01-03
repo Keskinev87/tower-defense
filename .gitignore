@@ -76,3 +76,4 @@ typings/
 .fusebox/
 *.pem
 server/client/client.zip
+server/client/images/towers.png
