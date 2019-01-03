@@ -14,10 +14,9 @@ var data = {
         [1,1,1],
         [1,1,1]
     ],
-    towers: [
-        [10, 0.1, 30, 'square'],
-        [20, 0.15, 30, 'square'],
-        [15, 0.1, 60, 'square']
+    towers: ['archer','mage'],
+    towerNests: [
+        [{top: '10%', left:'10%'}, {top: '20%', left: '20%'}, {top:'30%', left:'30%'}]
     ],
     getLevelConfig: function(num) {
         return new Promise((resolve, reject) => {
@@ -40,16 +39,25 @@ var data = {
             this.maps[num] ? resolve(this.map[num]) : reject("No maps remaining");
         })
     },
-    getTowers: function(nums) {
+    getAvailableTowers: function(nums) {
         return new Promise((resolve, reject) => {
             let result = [];
             for(let i = 0; i < nums.length; i++) {
+                console.log(this.towers[i]);
                 result.push(this.towers[i]);
             }
-            
+        
             result? resolve(result) : reject("No such towers available")
         })
         
+    },
+    getTowerNests: function(num) {
+        return new Promise((resolve, reject) => {
+            if(this.towerNests[num])
+                resolve(this.towerNests[num]);
+            else
+                reject();
+        })
     }
 
     
