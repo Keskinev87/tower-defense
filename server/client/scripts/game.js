@@ -88,14 +88,13 @@ class UserInterface {
             }
             case e.target.classList.contains('tower-ui'): {
                 //The player wants to build a tower - he/she clicks on an icon in the popup
-                let towerType = e.target.id; //we set the id to be equal to the type when constructing the object Tower
-                let nest = document.getElementById(this.activeTowerNest);
-                let topOffset = nest.style.top;
-                let leftOffset = nest.style.left;
+                let towerType = e.target.id; //we've set the id of the nest to be equal to the type when constructing the object Tower
+                let nest = document.getElementById(this.activeTowerNest); //we've set this when the player clicked on the tower nest to build the tower
 
                 let tower = map.availableTowers.find(x => x.type == towerType);
-                let towerCoords = {top: topOffset, left: leftOffset};
-                tower.build(towerCoords);
+                tower.build(nest); //TODO: use a promise
+                level.towers.push(tower);
+                console.log(level.towers);
 
             }
             default: {
