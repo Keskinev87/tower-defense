@@ -11,6 +11,7 @@ class Level {
         this.builtTowers; //array with the built towers.
         this.releaseStage = 0;  // used to release the monsters in several frames
         this.monstersLeft;  // how many monsters from the current wave are left - used to stop iterating when they are over.
+        this.towers = []; //the towers that are built by the player
     }
 
     load() {
@@ -58,18 +59,51 @@ class Level {
     }
 
     animateWave () {
-        
+       console.time('timer')
         this.ctx.clearRect(0,0, this.width, this.height);
+        //if there are any monsters left in the level
         if(this.monstersLeft > 0) {
+            //sort the array by progress, so the towers target the first monster.
+            // this.wave.sort(compare)
             for (let i=0; i < this.wave.length * this.releaseStage / 400; i++){
                 let curMonster = this.wave[i]
                 if(curMonster != null) {
-                    
                     curMonster.advance();
-                    
                     if(curMonster.progress < 1000) {
                         let currentPos = {x: map.path[curMonster.progress].x * this.width, y: map.path[curMonster.progress].y * this.height} 
                         curMonster.draw(currentPos, this.height, this.ctx);
+                        //check if the monster is within the range of a tower/s
+                        for(let tower of this.towers) {
+                            //check if the monster is in range. 
+                            if(tower.checkIfMonsterInRange(currentPos) && tower.currentTarget === null){
+                                console.log('here');
+                                tower.currentTarget = curMonster;
+                                tower.shootCount++;
+                                // aquire the current monster as a target
+                                // since we sorted the array at the beginning, the first monster should always be aquired as target
+                            }
+                            //check if the tower can shoot
+                            
+                            if(tower.shootCount == tower.speed && tower.currentTarget != null) {
+                                
+                                tower.fireProjectile(currentPos);
+                                tower.shootCount = 0; //reset the count so the next projectile is generated after speed * frames
+                            }
+                            
+                            for (let i = 0; i < tower.projectiles.length; i++) {
+                               
+                                if(tower.projectiles[i].move()){
+                                    
+                                    tower.projectiles[i].draw();
+                                }
+                                    
+                                else
+                                    tower.projectiles.splice(i,1);
+                            }
+                                
+                            
+                            tower.currentTarget = null;
+                        }
                     } else{     
                         this.wave[i] = null;
                         this.monstersLeft--;
@@ -79,10 +113,18 @@ class Level {
             if(this.releaseStage < 400) {
                 this.releaseStage++;
             }
-            
+            console.timeEnd('timer')
             window.requestAnimationFrame(() => this.animateWave()); //loop until the monsters are dead or out of the map
         } else {
             console.log("Done")
+        }
+
+        function compare(a,b) {
+            if (a.progress < b.progress)
+              return -1;
+            if (a.progress > b.progress)
+              return 1;
+            return 0;
         }
         
     }
@@ -104,7 +146,6 @@ class Map {
         this.image.src = './images/map.png';
         this.towerNestsCoords; //used to generate the tower nests along the card
         this.availableTowers=[]; //all towers that are available for this map
-        this.towers;  //all towers, that are built by the player
     }
     
     load() {
@@ -256,13 +297,16 @@ class Tower {
         this.gameArea = document.getElementById('gameArea');
         this.gameCanvas = document.getElementById('game-layer');
         this.width = this.gameCanvas.width;
-        this.towerWidth = this.width * 0.1;
-        this.center;
+        this.centerX;
+        this.centerY;
+        this.projectiles=[];
+        this.currentTarget = null;
+        this.shootCount = 0; //this will be incremented to the speed of the tower and when they are equal, a projectile will be shot.
 
         switch (type) {
             case 'archer': {
                 this.damage = 10;
-                this.range = 0.1;
+                this.range = 0.2;
                 this.speed = 15;
                 this.sprite = 'images/stone-tower.png';
                 this.uiImage = new Image();
@@ -272,31 +316,84 @@ class Tower {
                 this.uiImage.classList.add('tower-ui');
             }
         }
-        
-       
     }
     
-
-    build (point) {
+    build (nest) {
+        //We will build the tower using the nest coordinates. We will instert the tower into the nest.
+        //With position absolute the tower will use the nest's coordinates to build itself.
+        //The center coordinates are used to calculate if a monster is within range. Also as a start point for the projectiles.
+        console.log(parseInt(nest.style.top));
+        console.log(parseInt(nest.style.left));
+        this.centerX = Math.floor(this.gameCanvas.width * parseInt(nest.style.left)/100 + this.gameCanvas.width * 0.04);
+        this.centerY = Math.floor(this.gameCanvas.height * parseInt(nest.style.top)/100);
         let towerImg = document.createElement('img')
         towerImg.src = this.sprite;
         towerImg.classList.add('tower');
-        towerImg.style.top = point.top;
-        towerImg.style.left = point.left;
         towerImg.style.width = Math.floor(this.width * 0.08) + 'px';
 
-        this.gameArea.append(towerImg);
-
-         
-        // this.center = point;
-        // let startPt = {x: point.x - this.towerWidth / 2, y: point.y - this.towerWidth/2}
-        // ctx.strokeRect(startPt.x, startPt.y, this.towerWidth, this.towerWidth)
+        nest.append(towerImg);
+        //delete the border of the nest, so it is not visible anymore
+        nest.style.border = 'none';
+        console.log(this.centerX, this.centerY)
+        this.drawRange();
     }
     
-    drawRange (ctx) {
+    drawRange () {
+        let ctx = document.getElementById("game-layer").getContext('2d');
+        
         ctx.beginPath()
-        ctx.arc(this.center.x, this.center.y, this.range * this.width, 0, 2 * Math.PI, true)
+        ctx.arc(this.centerX, this.centerY, Math.floor(this.range * this.width), 0, 2 * Math.PI, true)
         ctx.stroke()
+    }
+
+    checkIfMonsterInRange(point) {
+        let dx = Math.abs(this.centerX - point.x);
+        let dy = Math.abs(this.centerY - point.y);
+        let distance = Math.sqrt(dx * dx + dy * dy);
+   
+        if(distance < this.range * this.width)
+            return true;
+        return false;
+    }
+
+    fireProjectile(endPt) {
+        let newProjectile = new Projectile(this.centerX, this.centerY, endPt);
+
+        this.projectiles.push(newProjectile);
+    }
+
+}
+
+class Projectile {
+
+    constructor(startX, startY, endPt) {
+        this.canvas = document.getElementById('game-layer');
+        this.ctx = this.canvas.getContext('2d');
+        this.speed = 30;
+        this.radius = 5;
+        this.originPointX = startX;
+        this.originPointY = startY;
+        this.curX = startX;
+        this.curY = startY;
+        this.endX = endPt.x;
+        this.endY = endPt.y;
+        this.distanceX = this.endX - this.originPointX;
+        this.distanceY = this.endY - this.originPointY;
+    }
+
+    draw() {
+        this.ctx.beginPath();
+        this.ctx.arc(this.curX, this.curY, this.radius, 0, 2*Math.PI);
+        this.ctx.fill();
+    }
+    
+    move() {
+        this.curX += this.distanceX / this.speed;
+        this.curY += this.distanceY / this.speed;
+        if(Math.abs(this.curX - this.originPointX) > Math.abs(this.distanceX) && Math.abs(this.curY - this.originPointY) > Math.abs(this.distanceY)) {
+            return false;
+        }
+        return true;
     }
 
 }
