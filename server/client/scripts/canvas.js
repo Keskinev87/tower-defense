@@ -23,7 +23,7 @@ function resizeGame() {
     var backgroundCanvas = document.getElementById('background-layer')
     var uiCanvas = document.getElementById('ui-layer')
 
-    gameCanvas.width = backgroundCanvas.width = uiCanvas.width = newWidth;
-    gameCanvas.height = backgroundCanvas.height = uiCanvas.height = newHeight;
+    gameCanvas.width = backgroundCanvas.width = uiCanvas.width = width = newWidth;
+    gameCanvas.height = backgroundCanvas.height = uiCanvas.height = height = newHeight;
         
 }
