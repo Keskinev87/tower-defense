@@ -4,7 +4,7 @@ var data = {
     levels: [[0,0,0],[1,1,1],[2,2,2]],
     waves: [
         [
-            [[100,1,'circle'],[20,2,'circle'],[100,1,'circle'],[100,1,'circle'],[50,2,'circle'],[50,1,'circle'],[50,1,'circle'],[100,1,'circle'],[100,1,'circle'],[90,1,'circle']],
+            [[100,2,'circle'],[20,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle']],
             [[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle']],
             [[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle']]
         ]
