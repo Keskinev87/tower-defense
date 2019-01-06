@@ -6,15 +6,18 @@ class UserInterface {
         this.backgroundLayer = document.getElementById('background-layer');
         this.menu = document.getElementById('menu');
         this.statusBar = document.getElementById('status-bar');
-        this.moneyCounter = document.getElementById('money').innerHTML;
+        this.moneyCounter = document.getElementById('money');
         this.waveCounter = document.getElementById('wave').innerHTML;
         this.activeTowerNestId; //used to know where to build a tower after the user gave the command. Each time a user clicks on a nest, we assign it's id to this variable.
+        this.pauseButton = document.getElementById('pause-button');
+        this.playButton = document.getElementById('play-button')
     }
 
     handleClicks(e) {
         console.log(e.target)
         switch(true) {
             case e.target.classList.contains('tower-nest'): {
+                //OPEN POPUP WITH AVAILABLE TOWERS TO BUILD
                 //The player has clicked on a tower nest. We have to display the popup with available towers on click.
                 let popup = document.getElementById("towers-popup"); //get the popup with the towers
                 let currentNestId = popup.parentElement.id //get the current nest the popup is attched to. This is needed to determine if we should hide the popup or not
@@ -30,17 +33,24 @@ class UserInterface {
                 break;
             }
             case e.target.classList.contains('tower-ui'): {
+                //BUILD TOWER
                 //The player wants to build a tower - he/she clicks on an icon in the popup
                 let towerType = e.target.id; //we've set the id of the tower image in the popup to be equal to the type when constructing the object Tower
                 let nest = document.getElementById(this.activeTowerNestId); //we've set this when the player clicked on the tower nest to build the tower
-                console.log
                 let tower = new Tower(towerType);
-                tower.build(nest); //TODO: use a promise
-                level.towers.push(tower);
-                console.log(level.towers);
+
+                if(game.money > tower.price){
+                    tower.build(nest); //TODO: use a promise
+                    level.towers.push(tower); //add the tower to the array with built towers
+                    ui.updateStatusMoney(-tower.price); //update the money counter
+                } else {
+                    //TODO: play some sound or show error
+                }
+                
 
             }
             default: {
+                //if the popup is opened, close it
                 let popup = document.getElementById('towers-popup')
                 popup.style.visibility = popup.style.visibility === '' ? 'hidden' : 'hidden';
                 break;
@@ -56,6 +66,7 @@ class UserInterface {
         this.backgroundLayer.style.visibility='';
         this.hideMenu();
         this.showStatusBar();
+        this.showPauseBtn();
     }
 
     showMenu() {
@@ -75,8 +86,27 @@ class UserInterface {
         this.statusBar.style.visibility = 'hidden';
     }
 
+    showPauseBtn() {
+        this.pauseButton.style.visibility = '';
+    }
+
+    hidePauseBtn() {
+        this.pauseButton.style.visibility = 'hidden';
+    }
+
+    pauseGame() {
+        //TODO
+    }
+
+    unpauseGame() {
+        //TODO
+    }
+
     updateStatusMoney(value) {
-        this.moneyCounter += value;
+        console.log("Updating")
+        this.moneyCounter.innerHTML = Number(this.moneyCounter.innerHTML) + value;
+        game.money += value;
+        console.log(game.money)
     }
 
     updateWave(value) {
@@ -113,6 +143,9 @@ class UserInterface {
         //This method just sets the top and left position
         for (let i=0; i < coords.length; i++) {
             let towerNest = document.createElement('div');
+            // let sprite = new Image();
+            // sprite.src = "images/nest.png";
+            // towerNest.appendChild(sprite);
 
             towerNest.classList.add('tower-nest');
             towerNest.classList.add('popup');
