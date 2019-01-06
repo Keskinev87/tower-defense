@@ -4,9 +4,9 @@ var data = {
     levels: [[0,0,0],[1,1,1],[2,2,2]],
     waves: [
         [
-            [[100,2,'circle'],[20,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle'],[100,2,'circle']],
-            [[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle']],
-            [[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle'],[0,1,'circle']]
+            [[100,10,'monster1/walk'],[20,8,'monster1/walk'],[100,8,'monster1/walk'],[100,8,'monster1/walk'],[100,5,'monster1/walk'],[100,5,'monster1/walk'],[100,5,'monster1/walk'],[100,4,'monster1/walk'],[100,4,'monster1/walk']],
+            [[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk']],
+            [[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk']]
         ]
     ],
     maps:[
@@ -16,7 +16,7 @@ var data = {
     ],
     towers: ['archer','mage'],
     towerNests: [
-        [{top: '10%', left:'10%'}, {top: '20%', left: '20%'}, {top:'30%', left:'30%'}]
+        [{top:'23%', left:'28%'}, {top: '27%',left:'46%'},{top:'68%', left: '64%'},{top: '65%', left: '84%'}]
     ],
     getLevelConfig: function(num) {
         return new Promise((resolve, reject) => {

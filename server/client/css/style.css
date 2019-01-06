@@ -40,17 +40,31 @@ body{
     height: 10%;
   }
 
+  #play-button,  #pause-button {
+    position: absolute;
+    z-index: 4;
+    background: rgba(255, 0, 0, 0.2);
+    right:5%;
+    bottom: 2%;
+    width: 10%;
+    height: 10%;
+    text-align: center;
+    font-size: 4vw;
+  }
+
+   
   .tower-nest {
     /* the places available for tower building */
     position: absolute;
-    border-radius: 50%;
-    top: 50%;
-    left:50%;
-    width: 6%;
-    height: 6%;
-    border: 1px solid red;
+    width: 10%;
+    height: 10%;
     z-index: 3;
+    background: url('../images/nest.png');
+    background-repeat:no-repeat;
+    background-size:cover;
   }
+
+  
 
   .tower-ui {
     /* the tower is in the popup. The user has to click to build it */
@@ -65,11 +79,11 @@ body{
     /*the tower is built  */
     position: absolute;
     bottom: 0;
-    z-index: 4;
+    z-index: 2;
   }
 
   canvas { position: absolute; }
-  #game-layer { z-index: 2; }
+  #game-layer { z-index: 3; }
   #background-layer { z-index: 1; }
 
 

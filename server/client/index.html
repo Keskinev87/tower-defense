@@ -21,7 +21,14 @@
               <li>Instructions</li>
               <li>Settings</li>
             </ul>
-        </div> 
+        </div>
+        <div id="play-button"  style="visibility: hidden">
+          >
+        </div>
+        <div id="pause-button" style="visibility: hidden">
+          II
+        </div>
+
       <canvas id="game-layer" style="visibility: hidden"></canvas>
       <canvas id="background-layer" style="visibility: hidden"></canvas>
       <div id=”statsPanel” style="visibility:hidden"></div>
@@ -31,6 +38,9 @@
 
     <script src="scripts/game.js"></script>
     <script src="scripts/level.js"></script>
+    <script src="scripts/tower.js"></script>
+    <script src="scripts/projectile.js"></script>
+    <script src="scripts/monster.js"></script>
     <script src="scripts/ui.js"></script>
     <script src="scripts/map.js"></script>
     <script src="scripts/data.js"></script>
@@ -41,7 +51,9 @@
     <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
     <script type="text/javascript">
       const BACKEND_URL = 'http://localhost:3000';
-      const IMAGES = ['tiles', 'tiles-small', 'map', 'tower1'];
+      const IMAGES = ['tiles', 'tiles-small', 'map', 'tower1', 'monster1/walk0','monster1/walk1',
+      'monster1/walk2','monster1/walk3','monster1/walk4','monster1/walk5','monster1/walk6',
+      'monster1/walk7','monster1/walk8','monster1/walk9'];
       var preloaded = {};
       var width;
       var height;
