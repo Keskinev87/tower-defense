@@ -15,6 +15,7 @@ class Game {
     constructor() {
         //the current level
         this.currentLevel = 0;
+        this.money = 100;
     }
 
     startGame() {
