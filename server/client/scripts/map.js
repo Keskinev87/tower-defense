@@ -4,13 +4,14 @@ class Map {
     constructor(){
 
         this.path;
-        this.image = new Image();
-        this.image.src = './images/map.png';
+        this.image = preloaded.map;
+        // this.image.src = './images/map.png';
         this.towerNestsCoords; //used to generate the tower nests along the card
         this.availableTowers=[]; //all towers that are available for this map
     }
     
     load() {
+        
         return new Promise((resolve, reject) => {
             let promises =[];
             promises.push(this.getTowerNests(), this.getAvailableTowers(), this.getPath()) //TODO - add the getMap
