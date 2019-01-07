@@ -69,10 +69,8 @@ class Level {
                     if(curMonster.progress < map.path.length) {
                         
                         let currentPos = {x: map.path[curMonster.progress].x * width, y: map.path[curMonster.progress].y * height};
-                       
-                        curMonster.curPosX = currentPos.x;
-                        curMonster.curPosY = currentPos.y;
-                        
+                    
+                        curMonster.setCurrentPoint(currentPos);
                         curMonster.draw();
                          
                         //check if the monster is within the range of a tower/s
@@ -81,18 +79,17 @@ class Level {
                   
                             let tower = this.towers[k];
                             
-                            if(tower.checkIfMonsterInRange(currentPos) && tower.currentTarget === null){
+                            if(tower.checkIfMonsterInRange(currentPos) && tower.currentTarget == null){
                                 
                                 // aquire the current monster as a target
                                 // since we sorted the array at the beginning, the first monster should always be aquired as target
                             //    tower.currentTarget = {x: curMonster.curPosX, x: curMonster.curPosY};
-                                console.log(currentPos, i)
                                 tower.setCurrentTarget(currentPos, i);   
                                            
                             }  
                         }
                     } else {     
-                        this.wave[i] = null; //do not rename to curMonster, since wave is a hashtable
+                        this.wave[i] = null; 
                         console.log("removing")
                         console.log(this.wave)
                         this.monstersLeft--;
@@ -101,7 +98,6 @@ class Level {
             }
            
             for(let tower of this.towers) {
-                
                 if(tower.shootCount == tower.speed && tower.currentTarget != null) {
                     
                     tower.fireProjectile();
@@ -119,6 +115,7 @@ class Level {
                         if (targetMonster != null) {
                             targetMonster.takeDamage();
                             if(targetMonster.remainingHp <= 0) {
+                                game.updateMoney(targetMonster.prizeMoney);
                                 this.wave[projectile.targetIndex] = null;
                                 this.monstersLeft--;
                             }
@@ -132,14 +129,13 @@ class Level {
                 }
                 //set the target to null again so the next time the tower will aquire a new target if some monster changed position to first.
                 tower.currentTarget = null;
-                tower.shootCount++;
                 if(tower.shootCount == tower.speed)
                     tower.shootCount = 0;
                 tower.shootCount++;
             }
 
             if(this.releaseStage < this.fullRelease) {
-                this.releaseStage += 2;
+                this.releaseStage += 4;
             }
             // console.timeEnd('timer')
             
@@ -148,6 +144,8 @@ class Level {
             console.log("Done")
             this.currentWaveNumber++;
             this.releaseStage = 0;
+            ui.updateWave(this.currentWaveNumber);
+            this.releaseNewWave();
         }
 
         function compare(a,b) {
