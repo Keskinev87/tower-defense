@@ -56,8 +56,8 @@ body{
   .tower-nest {
     /* the places available for tower building */
     position: absolute;
-    width: 10%;
-    height: 10%;
+    width: 8%;
+    height: 8%;
     z-index: 3;
     background: url('../images/nest.png');
     background-repeat:no-repeat;
