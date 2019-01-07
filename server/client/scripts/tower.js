@@ -12,13 +12,13 @@ class Tower {
 
         switch (type) {
             case 'archer': {
-                this.damage = 10;
-                this.range = 0.4;
+                this.damage = 1;
+                this.range = 0.1;
                 this.speed = 15;
                 this.price = 40;
-                this.sprite = 'images/stone-tower.png';
+                this.sprite = preloaded[type];
                 this.uiImage = new Image();
-                this.uiImage.src = 'images/stone-tower.png';
+                this.uiImage.src = 'images/archer.png';
                 this.uiImage.id = this.type;
                 this.uiImage.width = width * 0.08 ;
                 this.uiImage.classList.add('tower-ui');
@@ -32,16 +32,12 @@ class Tower {
         //The center coordinates are used to calculate if a monster is within range. Also as a start point for the projectiles.
         console.log(parseInt(nest.style.top));
         console.log(parseInt(nest.style.left));
-        this.centerX = Math.floor(width * parseInt(nest.style.left)/100 + width * 0.04);
+        this.centerX = Math.floor(width * parseInt(nest.style.left)/100);
         this.centerY = Math.floor(height * parseInt(nest.style.top)/100);
-        let towerImg = document.createElement('img')
-        towerImg.src = this.sprite;
-        towerImg.classList.add('tower');
-        towerImg.style.width = Math.floor(width * 0.08) + 'px';
-
-        nest.append(towerImg);
-        //delete the border of the nest, so it is not visible anymore
-        nest.style.border = 'none';
+        
+        bgrctx.drawImage(this.sprite, this.centerX, this.centerY  - 0.02 * height, this.uiImage.width, this.uiImage.width)
+        //hide the nest
+        nest.style.visibility = 'hidden';
         console.log(this.centerX, this.centerY)
         this.drawRange();
     }
@@ -64,15 +60,18 @@ class Tower {
     }
 
     setCurrentTarget(point, index) {
+        console.log("trying to set")
         this.currentTarget = point;
         this.currentTargetIndex = index;
+        console.log(this.currentTarget);
     }
 
     fireProjectile() {
-        let newProjectile = new Projectile(this.centerX, this.centerY, this.currentTarget, this.currentTargetIndex);
+        let newProjectile = new Projectile(this.centerX, this.centerY, this.currentTarget.x + width * 0.02, this.currentTarget.y + height * 0.02, this.currentTargetIndex);
 
         this.projectiles.push(newProjectile);
         
     }
+    
 
 }
