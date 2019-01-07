@@ -4,9 +4,9 @@ var data = {
     levels: [[0,0,0],[1,1,1],[2,2,2]],
     waves: [
         [
-            [[100,10,'monster1/walk'],[20,8,'monster1/walk'],[100,8,'monster1/walk'],[100,8,'monster1/walk'],[100,5,'monster1/walk'],[100,5,'monster1/walk'],[100,5,'monster1/walk'],[100,4,'monster1/walk'],[100,4,'monster1/walk']],
-            [[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk']],
-            [[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk'],[0,1,'monster1/walk']]
+            [[20,6,'spider'],[100,8,'spider'],[100,8,'grunt'],[100,5,'grunt'],[100,5,'grunt'],[100,5,'grunt'],[100,4,'knight'],[100,4,'knight']],
+            [[0,2,'grunt'],[0,3,'grunt'],[0,2,'grunt'],[0,3,'grunt'],[0,2,'grunt'],[0,3,'grunt'],[0,3,'grunt'],[0,2,'grunt'],[0,2,'grunt'],[0,3,'grunt']],
+            [[0,10,'spider'],[0,1,'knight'],[0,10,'spider'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight']]
         ]
     ],
     maps:[
@@ -16,7 +16,7 @@ var data = {
     ],
     towers: ['archer','mage'],
     towerNests: [
-        [{top:'23%', left:'28%'}, {top: '27%',left:'46%'},{top:'68%', left: '64%'},{top: '65%', left: '84%'}]
+        [{top:'39%', left:'60%'}, {top: '24%',left:'75%'},{top:'58%', left: '75%'},{top: '58%', left: '40%'}]
     ],
     getLevelConfig: function(num) {
         return new Promise((resolve, reject) => {
