@@ -77,3 +77,8 @@ typings/
 *.pem
 server/client/client.zip
 server/client/images/towers.png
+server/client/images/monsters-test/merge_from_ofoct5.png
+server/client/images/monsters-test/merge_from_ofoct2.png
+server/client/images/monsters-test/merge_from_ofoct.png
+server/client/images/monsters-test/merge_from_ofoct3.png
+server/client/images/monsters-test/merge_from_ofoct4.png
