@@ -69,41 +69,51 @@ class Map {
         
             for(let i=1; i <= 10000; i ++) {
                 switch (true) {
-                    case i <= 1400:
-                        x = Number((0.2 / 1400 * i).toFixed(4));
-                        y = 0.2;
+                    case i <= 2130:
+                        x = Number((0.84 / 2130 * i).toFixed(4));
+                        y = 0.1;
                         xy = {x:x, y:y} 
                         break
-                    case i <= 2400:
-                        x = 0.2;
-                        y = Number((0.2 + 0.2/1000 * (i - 1400)).toFixed(4));		
+                    case i <= 2980:
+                        x = 0.84;
+                        y = Number((0.1 + 0.58/850 * (i - 2130)).toFixed(4));		
                         xy = {x:x, y:y} 	
                         break
-                    case i <= 3800:
-                        x = Number((0.2 + 0.2 / 1400 * (i-2400)).toFixed(4)) 
-                        y = 0.4
+                    case i <= 4330:
+                        x = Number((0.84 - 0.52 / 1350 * (i-2980)).toFixed(4)) 
+                        y = 0.68
                         xy = {x:x, y:y}
                         break 
-                    case i <= 6200:
-                        x = Number((0.4 + 0.2 / 2400 * (i-3800)).toFixed(4))
-                        y = Number((0.4 + 0.2 / 2400 * (i-3800)).toFixed(4))
-                        xy = {x:x, y:y}
+                    case i <= 4610:
+                        x = 0.32;
+                        y = Number((0.68 - 0.22 / 280 * (i-4330)).toFixed(4));
+                        xy = {x:x, y:y};
                         break 
-                    case i <= 7600:
-                        x = Number((0.6 + 0.2 / 1400 * (i-6200)).toFixed(4))
-                        y = 0.6
-                        xy = {x:x, y:y}
+                    case i <= 5610:
+                        x = Number((0.32 + 0.38 / 1000 * (i-4610)).toFixed(4));
+                        y = 0.46;
+                        xy = {x:x, y:y};
                         break 
-                    case i <=8600:
-                        x = 0.8;
-                        y = Number((0.6 + 0.2/1000 * (i - 7600)).toFixed(4))
-                        xy = {x:x, y:y}
+                    case i <=5890:
+                        x = 0.70;
+                        y = Number((0.46 - 0.2/280 * (i - 5610)).toFixed(4));
+                        xy = {x:x, y:y};
                         break 
+                    case i <= 7390:
+                        x = Number((0.70 - 0.6 / 1500 * (i - 5890)).toFixed(4));
+                        y = 0.26;
+                        xy = {x:x, y:y};
+                        break 
+                    case i <= 8240:
+                        x = 0.10;
+                        y = Number((0.26 + 0.6/850 * (i - 7390)).toFixed(4));
+                        xy = {x:x, y:y}
+                        break
                     case i <= 10000:
-                        x = Number((0.8 + 0.2/ 1400 * (i - 8600)).toFixed(4))
-                        y = 0.8
+                        x = Number((0.1 + 0.72 / 1760 * (i - 8240)).toFixed(4));
+                        y = 0.86;
                         xy = {x:x, y:y}
-                        break 
+                        break      
                     default:
                         break
                     
