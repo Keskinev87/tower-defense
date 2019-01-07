@@ -7,7 +7,7 @@ class UserInterface {
         this.menu = document.getElementById('menu');
         this.statusBar = document.getElementById('status-bar');
         this.moneyCounter = document.getElementById('money');
-        this.waveCounter = document.getElementById('wave').innerHTML;
+        this.waveCounter = document.getElementById('wave');
         this.activeTowerNestId; //used to know where to build a tower after the user gave the command. Each time a user clicks on a nest, we assign it's id to this variable.
         this.pauseButton = document.getElementById('pause-button');
         this.playButton = document.getElementById('play-button')
@@ -103,14 +103,12 @@ class UserInterface {
     }
 
     updateStatusMoney(value) {
-        console.log("Updating")
         this.moneyCounter.innerHTML = Number(this.moneyCounter.innerHTML) + value;
         game.money += value;
-        console.log(game.money)
     }
 
     updateWave(value) {
-        this.waveCounter += value;
+        this.waveCounter.innerHTML = Number(this.waveCounter.innerHTML) + value;
     }
 
     placeTowerNests(coords, towers) {
