@@ -52,5 +52,10 @@ class Game {
             })
         })
     }
+
+    updateMoney(val) {
+        this.money += val;
+        ui.updateStatusMoney(val);
+    }
 }
 
