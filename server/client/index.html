@@ -13,7 +13,8 @@
             <span>Money: </span>
             <span id="money">100</span>
             <span>Wave: </span>
-            <span id="wave">0 / 100</span>
+            <span id="wave">0</span>
+            <span>/100</span>
         </div>
         <div>
             <ul id="menu" style="visibility: hidden">
@@ -44,16 +45,13 @@
     <script src="scripts/ui.js"></script>
     <script src="scripts/map.js"></script>
     <script src="scripts/data.js"></script>
-    <script src="scripts/models.js"></script>
     <script src="scripts/canvas.js"></script>
     <script src="scripts/pathGenerator.js"></script>
     <script src="scripts/fbinstant.6.0.mock.js"></script>
     <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
     <script type="text/javascript">
       const BACKEND_URL = 'http://localhost:3000';
-      const IMAGES = ['tiles', 'tiles-small', 'map', 'tower1', 'monster1/walk0','monster1/walk1',
-      'monster1/walk2','monster1/walk3','monster1/walk4','monster1/walk5','monster1/walk6',
-      'monster1/walk7','monster1/walk8','monster1/walk9'];
+      const IMAGES = ['map', 'archer', 'grunt0', 'grunt1', 'spider0', 'spider1', 'knight0', 'knight1'];
       var preloaded = {};
       var width;
       var height;
