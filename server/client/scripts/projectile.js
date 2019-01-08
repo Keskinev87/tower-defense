@@ -1,6 +1,7 @@
 class Projectile {
 
-    constructor(startX, startY, endPtX, endPtY, index) {
+    constructor(damage, startX, startY, endPtX, endPtY, index) {
+        this.damage = damage;
         this.speed = 120;
         this.radius = 5;
         this.originPointX = startX;
@@ -22,12 +23,14 @@ class Projectile {
     }
     
     move() {
-        this.curX += this.distanceX / 15;
-        this.curY += this.distanceY / 15;
+        
         if(Math.abs(this.curX - this.originPointX) > Math.abs(this.distanceX) && Math.abs(this.curY - this.originPointY) > Math.abs(this.distanceY)) {
             return false;
+        } else {
+            this.curX += this.distanceX / 15;
+            this.curY += this.distanceY / 15;
+            return true;
         }
-        return true;
     }
 
 }

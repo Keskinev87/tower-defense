@@ -4,8 +4,7 @@
   "description": "Tower defense game in html5",
   "main": "index.js",
   "scripts": {
-	"npm start": "node index.js",
-    "test": "test"
+	"start": "node index.js"
   },
   "keywords": [
     "game",

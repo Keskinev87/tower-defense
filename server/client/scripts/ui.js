@@ -10,7 +10,8 @@ class UserInterface {
         this.waveCounter = document.getElementById('wave');
         this.activeTowerNestId; //used to know where to build a tower after the user gave the command. Each time a user clicks on a nest, we assign it's id to this variable.
         this.pauseButton = document.getElementById('pause-button');
-        this.playButton = document.getElementById('play-button')
+        this.playButton = document.getElementById('play-button');
+        this.loader = document.getElementById('loader-background');
     }
 
     handleClicks(e) {
@@ -41,10 +42,11 @@ class UserInterface {
 
                 if(game.money > tower.price){
                     tower.build(nest); //TODO: use a promise
-                    level.towers.push(tower); //add the tower to the array with built towers
-                    ui.updateStatusMoney(-tower.price); //update the money counter
+                    console.log(game.money)
+                    
                 } else {
                     //TODO: play some sound or show error
+                    console.log("Error");
                 }
                 
 
@@ -67,6 +69,10 @@ class UserInterface {
         this.hideMenu();
         this.showStatusBar();
         this.showPauseBtn();
+    }
+
+    hideLoadingBar() {
+        this.loader.style.display = 'none'
     }
 
     showMenu() {
@@ -103,8 +109,9 @@ class UserInterface {
     }
 
     updateStatusMoney(value) {
+        console.log(this.moneyCounter.innerHTML)
+        console.log(value)
         this.moneyCounter.innerHTML = Number(this.moneyCounter.innerHTML) + value;
-        game.money += value;
     }
 
     updateWave(value) {

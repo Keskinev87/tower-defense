@@ -70,9 +70,8 @@ class Monster {
         ctx.fillRect(this.curPosX, this.curPosY - this.deviation, height * 0.08 * this.remainingHp / this.hp, height*0.01)   
     }
 
-    takeDamage() {
-        this.remainingHp += -10;
-        console.log(this.remainingHp);
+    takeDamage(damage) {
+        this.remainingHp -= damage;
     }
 
 }

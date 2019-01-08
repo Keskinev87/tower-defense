@@ -12,7 +12,7 @@ class Tower {
 
         switch (type) {
             case 'archer': {
-                this.damage = 1;
+                this.damage = 10;
                 this.range = 0.1;
                 this.speed = 15;
                 this.price = 40;
@@ -34,7 +34,12 @@ class Tower {
         console.log(parseInt(nest.style.left));
         this.centerX = Math.floor(width * parseInt(nest.style.left)/100);
         this.centerY = Math.floor(height * parseInt(nest.style.top)/100);
-        
+        //add to active towers
+        level.towers.push(this); //add the tower to the array with built towers
+        //subract cost
+        //update the money
+        game.updateMoney(-this.price);
+        //draw the tower
         bgrctx.drawImage(this.sprite, this.centerX, this.centerY  - 0.02 * height, this.uiImage.width, this.uiImage.width)
         //hide the nest
         nest.style.visibility = 'hidden';
@@ -60,14 +65,14 @@ class Tower {
     }
 
     setCurrentTarget(point, index) {
-        console.log("trying to set")
+        
         this.currentTarget = point;
         this.currentTargetIndex = index;
-        console.log(this.currentTarget);
+        
     }
 
     fireProjectile() {
-        let newProjectile = new Projectile(this.centerX, this.centerY, this.currentTarget.x + width * 0.02, this.currentTarget.y + height * 0.02, this.currentTargetIndex);
+        let newProjectile = new Projectile(this.damage, this.centerX, this.centerY, this.currentTarget.x + width * 0.02, this.currentTarget.y + height * 0.02, this.currentTargetIndex);
 
         this.projectiles.push(newProjectile);
         

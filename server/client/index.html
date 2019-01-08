@@ -9,6 +9,9 @@
   <body>
     
     <div id="gameArea">
+        <div id="loader-background">
+          <div id="loading-bar"></div>
+        </div>
         <div id="status-bar" style="visibility: hidden">
             <span>Money: </span>
             <span id="money">100</span>
@@ -47,7 +50,6 @@
     <script src="scripts/data.js"></script>
     <script src="scripts/canvas.js"></script>
     <script src="scripts/pathGenerator.js"></script>
-    <script src="scripts/fbinstant.6.0.mock.js"></script>
     <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
     <script type="text/javascript">
       const BACKEND_URL = 'http://localhost:3000';
@@ -58,31 +60,31 @@
       
       window.onload = function() {
         resizeGame();
-        FBInstant.initializeAsync().then(function() {
-
-          //Preload resources
-          IMAGES.forEach(function(imgName, index) {
-            let img = new Image();
-            img.src = './images/' + imgName + '.png';
-            preloaded[imgName] = img;
-            FBInstant.setLoadingProgress(Math.ceil(index / IMAGES.length)*100);
-          })
-
-          //Starting the game...
-          FBInstant.startGameAsync().then(function() {
-            game = new Game(width, height);
+        loadResources().then(() => {
+          game = new Game(width, height);
             ui = new UserInterface();
+            ui.hideLoadingBar();
             ui.showMenu();
-          })
         })
+        
+        function loadResources(){
+          return new Promise((resolve, reject) => {
+              let loadingBar = document.getElementById('loading-bar')
+            //Preload resources
+            IMAGES.forEach(function(imgName, index) {
+              let img = new Image();
+              img.src = './images/' + imgName + '.png';
+              preloaded[imgName] = img;
+              loadingBar.style.width = Math.ceil(index / IMAGES.length * 100);
+              if(index == IMAGES.length -1)
+                resolve();
+            })
+            reject();
+          })
+        }
       }
 
-      function selectContext() {
-        FBInstant.context.chooseAsync()
-          .then(function() {
-            showMenu();
-          })
-      }
+      
 
       
 

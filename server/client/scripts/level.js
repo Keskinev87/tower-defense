@@ -113,7 +113,7 @@ class Level {
                         //damage the monsters and kill them
                         let targetMonster = this.wave[projectile.targetIndex];
                         if (targetMonster != null) {
-                            targetMonster.takeDamage();
+                            targetMonster.takeDamage(projectile.damage);
                             if(targetMonster.remainingHp <= 0) {
                                 game.updateMoney(targetMonster.prizeMoney);
                                 this.wave[projectile.targetIndex] = null;
