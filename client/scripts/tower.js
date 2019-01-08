@@ -72,7 +72,7 @@ class Tower {
     }
 
     fireProjectile() {
-        let newProjectile = new Projectile(this.damage, this.centerX, this.centerY, this.currentTarget.x + width * 0.02, this.currentTarget.y + height * 0.02, this.currentTargetIndex);
+        let newProjectile = new Projectile(this.damage, this.centerX, this.centerY, this.currentTarget.x + width * 0.03, this.currentTarget.y + height * 0.08, this.currentTargetIndex);
 
         this.projectiles.push(newProjectile);
         

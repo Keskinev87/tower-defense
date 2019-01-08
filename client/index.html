@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>Canvas tutorial</title>
+    <title>TD Demo</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 
@@ -53,7 +53,7 @@
     <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
     <script type="text/javascript">
       const BACKEND_URL = 'http://localhost:3000';
-      const IMAGES = ['map', 'archer', 'grunt0', 'grunt1', 'spider0', 'spider1', 'knight0', 'knight1'];
+      const IMAGES = ['map', 'archer', 'grunt0', 'grunt1', 'spider0', 'spider1', 'knight0', 'knight1', 'test'];
       var preloaded = {};
       var width;
       var height;
@@ -75,7 +75,9 @@
               let img = new Image();
               img.src = './images/' + imgName + '.png';
               preloaded[imgName] = img;
-              loadingBar.style.width = Math.ceil(index / IMAGES.length * 100);
+              console.log(index)
+              console.log(Math.ceil(index / IMAGES.length * 100) + '%');
+              loadingBar.style.width = Math.ceil(index / (IMAGES.length - 1) * 100) + '%';
               if(index == IMAGES.length -1)
                 resolve();
             })
