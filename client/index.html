@@ -71,7 +71,10 @@
                   .register('./service-worker.js')
                   .then(function() { console.log('Service Worker Registered'); });
         }
+
         resizeGame();
+
+        // document.addEventListener('resize', resize);
         document.getElementById('loader-background').style.visibility = '';
         loadResources().then(() => {
           game = new Game(width, height);
@@ -103,14 +106,14 @@
       }
 
       function resizeGame () {
-
+        console.log("Resizing")
         let gameArea = document.getElementById('gameArea');
         let gameCanvas = document.getElementById('game-layer');
         let backgroundCanvas = document.getElementById('background-layer')
         let uiDiv = document.getElementById('ui-layer')
         let widthToHeight = 16 / 9;
-        // let newWidth = window.innerWidth;
-        // let newHeight = window.innerHeight;
+        // let newWidth = window.outerWidth;
+        // let newHeight = window.outerHeight;
         let newWidth = screen.width;
         let newHeight = screen.height;
         let newWidthToHeight = newWidth / newHeight;
