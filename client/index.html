@@ -95,8 +95,10 @@
         let backgroundCanvas = document.getElementById('background-layer')
         let uiDiv = document.getElementById('ui-layer')
         let widthToHeight = 16 / 9;
-        let newWidth = window.innerWidth;
-        let newHeight = window.innerHeight;
+        // let newWidth = window.innerWidth;
+        // let newHeight = window.innerHeight;
+        let newWidth = screen.width;
+        let newHeight = screen.height;
         let newWidthToHeight = newWidth / newHeight;
 
         if (newWidthToHeight > widthToHeight) {

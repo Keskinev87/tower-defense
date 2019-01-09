@@ -20,6 +20,7 @@ class Game {
 
     startGame() {
         this.launchIntoFullscreen(document.documentElement);
+        resizeGame();
         let promises = [];
         promises.push(this.createNewMap(), this.createNewLevel())
         Promise.all(promises).then(() => {
