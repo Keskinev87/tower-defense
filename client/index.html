@@ -73,8 +73,6 @@
         }
 
         resizeGame();
-
-        // document.addEventListener('resize', resize);
         document.getElementById('loader-background').style.visibility = '';
         loadResources().then(() => {
           game = new Game(width, height);
