@@ -8,7 +8,7 @@ class Tower {
         this.currentTarget = null;
         this.currentTargetIndex;
         this.shootCount = 0; //this will be incremented to the speed of the tower and when they are equal, a projectile will be shot.
-        
+        console.log(type)
 
         switch (type) {
             case 'archer': {
@@ -22,6 +22,20 @@ class Tower {
                 this.uiImage.id = this.type;
                 this.uiImage.width = width * 0.08 ;
                 this.uiImage.classList.add('tower-ui');
+                break;
+            }
+            case 'magic': {
+                this.damage = 25;
+                this.range = 0.15;
+                this.speed = 60;
+                this.price = 60;
+                this.sprite = preloaded[type];
+                this.uiImage = new Image();
+                this.uiImage.src = 'images/magic.png';
+                this.uiImage.id = this.type;
+                this.uiImage.width = width* 0.08;
+                this.uiImage.classList.add('tower-ui');
+                break;
             }
         }
     }

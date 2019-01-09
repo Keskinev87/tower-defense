@@ -4,9 +4,14 @@ var data = {
     levels: [[0,0,0],[1,1,1],[2,2,2]],
     waves: [
         [
-            [[20,6,'spider'],[100,8,'spider'],[100,8,'grunt'],[100,5,'grunt'],[100,5,'grunt'],[100,5,'grunt'],[100,4,'knight'],[100,4,'knight']],
-            [[0,2,'grunt'],[0,3,'grunt'],[0,2,'grunt'],[0,3,'grunt'],[0,2,'grunt'],[0,3,'grunt'],[0,3,'grunt'],[0,2,'grunt'],[0,2,'grunt'],[0,3,'grunt']],
-            [[0,10,'spider'],[0,1,'knight'],[0,10,'spider'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight'],[0,1,'knight']]
+            [{type:'spider', count: 20, health: 20,speed: 4},{type:'grunt',count: 10,health: 100, speed:2}],
+            [{type:'spider', count: 20, health: 20,speed: 4},{type:'grunt',count: 10,health: 100, speed:2}],
+            [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
+            [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
+            [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
+            [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
+            [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
+            [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}]
         ]
     ],
     maps:[
@@ -14,9 +19,9 @@ var data = {
         [1,1,1],
         [1,1,1]
     ],
-    towers: ['archer','mage'],
+    towers: ['archer','magic'],
     towerNests: [
-        [{top:'39%', left:'60%'}, {top: '24%',left:'75%'},{top:'58%', left: '75%'},{top: '58%', left: '40%'}]
+        [{top:'39%', left:'60%'}, {top: '24%',left:'75%'},{top:'58%', left: '75%'},{top: '58%', left: '40%'},{top:'24%', left:'7%'}]
     ],
     getLevelConfig: function(num) {
         return new Promise((resolve, reject) => {
@@ -42,7 +47,7 @@ var data = {
     getAvailableTowers: function(nums) {
         return new Promise((resolve, reject) => {
             let result = [];
-            for(let i = 0; i < nums.length; i++) {
+            for(let i = 0; i < nums; i++) {
                 console.log(this.towers[i]);
                 result.push(this.towers[i]);
             }

@@ -5,7 +5,20 @@ body{
     font-family: "Comic Sans MS", cursive, sans-serif;
   }
 
+  #message-box {
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    width: 40%;
+    height: 5%;
+    background: rgb(66, 37, 15, 0.2);
+    color: white;
+    text-align: center;
+    z-index: 5;
+  }
+
   #loader-background {
+    visibility: 'hidden';
     position: absolute;
     top: 45%;
     left:20%;
@@ -32,14 +45,13 @@ body{
   #menu {
     position: absolute;
     z-index: 4;
-    list-style-type: none;
     top: 20%;
     left: 20%;
     width: 50%;
     border: 3px solid green;
   }
 
-  #menu > li {
+  #menu > div {
     border: 1px solid red;
     padding: 10px;
     margin: 5px;
@@ -47,28 +59,33 @@ body{
     cursor: pointer;
   }
 
-  #menu > li:hover {
+  #menu > div:hover {
     background-color: lime;
   }
 
   #status-bar {
     position: absolute;
-    background: rgba(255, 0, 0, 0.2);
+    background: rgb(66, 37, 15, 0.2);
+    color: lime;
     z-index: 4; 
     width: 100%;
-    height: 10%;
+    height: 5%;
+  }
+
+  #status-bar > span {
+    display: inline;
   }
 
   #play-button,  #pause-button {
     position: absolute;
     z-index: 4;
-    background: rgba(255, 0, 0, 0.2);
-    right:5%;
+    right:2%;
     bottom: 2%;
-    width: 10%;
+    width: 6%;
     height: 10%;
     text-align: center;
-    font-size: 4vw;
+    background: url('../images/pause_btn.png');
+    background-size: cover;
   }
 
    

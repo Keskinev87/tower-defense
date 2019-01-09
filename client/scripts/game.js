@@ -19,7 +19,7 @@ class Game {
     }
 
     startGame() {
-
+        this.launchIntoFullscreen(document.documentElement);
         let promises = [];
         promises.push(this.createNewMap(), this.createNewLevel())
         Promise.all(promises).then(() => {
@@ -53,9 +53,28 @@ class Game {
         })
     }
 
+    launchIntoFullscreen(element) {
+        if(element.requestFullscreen) {
+          element.requestFullscreen();
+        } else if(element.mozRequestFullScreen) {
+          element.mozRequestFullScreen();
+        } else if(element.webkitRequestFullscreen) {
+          element.webkitRequestFullscreen();
+        } else if(element.msRequestFullscreen) {
+          element.msRequestFullscreen();
+        }
+      }
+
     updateMoney(val) {
         this.money += val;
         ui.updateStatusMoney(val);
     }
+
+    updateScore(val) {
+        this.score += val;
+        ui.updateScore(val);
+    }
+    
+   
 }
 

@@ -7,30 +7,28 @@
   </head>
 
   <body>
-    
+    <div id="loader-background">
+      <div id="loading-bar"></div>
+    </div>
+    <p id="message-box" style="visibility: hidden">
+    </p>
     <div id="gameArea">
-        <div id="loader-background">
-          <div id="loading-bar"></div>
-        </div>
+        
         <div id="status-bar" style="visibility: hidden">
-            <span>Money: </span>
+            <span>Money:</span>
             <span id="money">100</span>
             <span>Wave: </span>
             <span id="wave">0</span>
-            <span>/100</span>
+            <span>Score:</span>
+            <span id="score">0</span>
         </div>
-        <div>
-            <ul id="menu" style="visibility: hidden">
-              <li onclick="game.startGame()">New Game</li>
-              <li>Instructions</li>
-              <li>Settings</li>
-            </ul>
+        <div id="menu" style="visibility: hidden">
+              <div onclick="game.startGame()">New Game</div>
+              <div>Instructions</div>
+              <div>Settings</div>
         </div>
-        <div id="play-button"  style="visibility: hidden">
-          >
-        </div>
-        <div id="pause-button" style="visibility: hidden">
-          II
+        
+        <div id="pause-button" style="visibility: hidden" onclick="ui.togglePause()">
         </div>
 
       <canvas id="game-layer" style="visibility: hidden"></canvas>
@@ -53,13 +51,14 @@
     <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
     <script type="text/javascript">
       const BACKEND_URL = 'http://localhost:3000';
-      const IMAGES = ['map', 'archer', 'grunt0', 'grunt1', 'spider0', 'spider1', 'knight0', 'knight1', 'test'];
+      const IMAGES = ['map', 'pause_btn', 'archer', 'magic', 'grunt0', 'grunt1', 'spider0', 'spider1', 'knight0', 'knight1', 'test'];
       var preloaded = {};
       var width;
       var height;
       
       window.onload = function() {
         resizeGame();
+        document.getElementById('loader-background').style.visibility = '';
         loadResources().then(() => {
           game = new Game(width, height);
             ui = new UserInterface();
@@ -74,10 +73,13 @@
             IMAGES.forEach(function(imgName, index) {
               let img = new Image();
               img.src = './images/' + imgName + '.png';
+              img.addEventListener("load", function() {
+                loadingBar.style.width = Math.ceil(index / (IMAGES.length - 1) * 100) + '%';
+              }, false)
               preloaded[imgName] = img;
               console.log(index)
               console.log(Math.ceil(index / IMAGES.length * 100) + '%');
-              loadingBar.style.width = Math.ceil(index / (IMAGES.length - 1) * 100) + '%';
+              
               if(index == IMAGES.length -1)
                 resolve();
             })
@@ -85,10 +87,6 @@
           })
         }
       }
-
-      
-
-      
 
       function resizeGame () {
 

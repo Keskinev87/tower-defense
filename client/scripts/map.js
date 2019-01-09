@@ -44,7 +44,7 @@ class Map {
 
     getAvailableTowers() {
         return new Promise((resolve, reject) => {
-            data.getAvailableTowers([0]).then(towers => {
+            data.getAvailableTowers(2).then(towers => {
                 for (let towerType of towers) {
                     console.log("Tower:")
                     console.log(towerType)

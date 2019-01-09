@@ -16,14 +16,17 @@ class Monster {
         switch(type) {
             case 'spider': {
                 this.prizeMoney = 2;
+                this.score = 1;
                 break;
             }
             case 'grunt': {
                 this.prizeMoney = 5;
+                this.score = 3;
                 break;
             }
             case 'knight': {
                 this.prizeMoney = 10;
+                this.score = 5;
                 break;
             }
             default: {

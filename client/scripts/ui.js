@@ -8,10 +8,23 @@ class UserInterface {
         this.statusBar = document.getElementById('status-bar');
         this.moneyCounter = document.getElementById('money');
         this.waveCounter = document.getElementById('wave');
+        this.scoreCounter = document.getElementById('score');
         this.activeTowerNestId; //used to know where to build a tower after the user gave the command. Each time a user clicks on a nest, we assign it's id to this variable.
         this.pauseButton = document.getElementById('pause-button');
-        this.playButton = document.getElementById('play-button');
         this.loader = document.getElementById('loader-background');
+        this.messageBox = document.getElementById('message-box');
+    }
+
+    displayMessage(msg) {
+    
+        this.messageBox.innerHTML = msg;
+        this.messageBox.style.visibility = '';
+                
+        setTimeout(() => {
+            this.messageBox.innerHTML ='';
+            this.messageBox.style.visibility = 'hidden';
+        },3000)
+       
     }
 
     handleClicks(e) {
@@ -46,6 +59,7 @@ class UserInterface {
                     
                 } else {
                     //TODO: play some sound or show error
+                    ui.displayMessage("Not enough money");
                     console.log("Error");
                 }
                 
@@ -72,7 +86,7 @@ class UserInterface {
     }
 
     hideLoadingBar() {
-        this.loader.style.display = 'none'
+        this.loader.style.display = 'none';
     }
 
     showMenu() {
@@ -100,12 +114,18 @@ class UserInterface {
         this.pauseButton.style.visibility = 'hidden';
     }
 
-    pauseGame() {
-        //TODO
-    }
-
-    unpauseGame() {
-        //TODO
+    togglePause() {
+        level.paused = !level.paused;
+        if(level.paused) {
+            this.pauseButton.style.background = "url('images/pause_btn.png')"
+            this.pauseButton.style.backgroundSize = 'cover'
+        }
+        else {
+            this.pauseButton.style.background = "url('images/play_btn.png')"
+            this.pauseButton.style.backgroundSize = 'cover'
+        }
+            
+        console.log(level.paused)
     }
 
     updateStatusMoney(value) {
@@ -116,6 +136,10 @@ class UserInterface {
 
     updateWave(value) {
         this.waveCounter.innerHTML = Number(this.waveCounter.innerHTML) + value;
+    }
+
+    updateScore(value) {
+        this.scoreCounter.innerHTML = Number(this.scoreCounter.innerHTML) + value;
     }
 
     placeTowerNests(coords, towers) {
