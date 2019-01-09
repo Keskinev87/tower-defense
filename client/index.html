@@ -4,6 +4,15 @@
     <meta charset="utf-8"/>
     <title>TD Demo</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <link rel="manifest" href="/manifest.json">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="TD demo">
+    <link rel="apple-touch-icon" href="images/icons-192.png">
+    <meta name="msapplication-TileImage" content="images/icons/icons-192.png">
+    <meta name="msapplication-TileColor" content="#2F3BA2">
   </head>
 
   <body>
@@ -57,6 +66,11 @@
       var height;
       
       window.onload = function() {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker
+                  .register('./service-worker.js')
+                  .then(function() { console.log('Service Worker Registered'); });
+        }
         resizeGame();
         document.getElementById('loader-background').style.visibility = '';
         loadResources().then(() => {
