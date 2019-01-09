@@ -29,6 +29,7 @@ var filesToCache = [
     '/scripts/pathGenerator.js',
     '/images/map.png',
     '/images/pause_btn.png',
+    '/images/play_btn.png',
     '/images/archer.png',
     '/images/magic.png',
     '/images/grunt0.png',
