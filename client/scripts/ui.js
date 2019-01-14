@@ -34,19 +34,19 @@ class UserInterface {
                 //OPEN POPUP WITH AVAILABLE TOWERS TO BUILD
                 //The player has clicked on a tower nest. We have to display the popup with available towers on click.
                 let popup = document.getElementById("towers-popup"); //get the popup with the towers
-                let currentNestId = popup.parentElement.id //get the current nest the popup is attched to. This is needed to determine if we should hide the popup or not
-                let towerNest = document.getElementById(e.target.id); //get the tower nest, that was clicked
-                this.activeTowerNestId = e.target.id; //we will use this id in the next case if the user wants to build a tower here.
                 
-                towerNest.appendChild(popup); //append the popup to the tower nest
-                if(currentNestId != towerNest.id) {
+                //show the popup with towers for the user
+                if(this.activeTowerNestId != e.target.id) {
+                    console.log("Should show")
                     popup.style.visibility = '';
                 } else{
                     popup.style.visibility = popup.style.visibility === 'hidden' ? '' : 'hidden';
                 }
+
+                this.activeTowerNestId = e.target.id; //we will use this id in the next case if the user wants to build a tower here.
                 break;
             }
-            case e.target.classList.contains('tower-ui'): {
+            case e.target.classList.contains('tower-ui-image'): {
                 //BUILD TOWER
                 //The player wants to build a tower - he/she clicks on an icon in the popup
                 let towerType = e.target.id; //we've set the id of the tower image in the popup to be equal to the type when constructing the object Tower
@@ -151,19 +151,36 @@ class UserInterface {
         
         //creating the popup div with all available towers for building
         let popup = document.createElement('div');
+        let popupHeading = document.createElement('p');
+        popupHeading.innerText = "Choose a tower to build"
+        popupHeading.classList.add('popup-heading');
+
+        popup.appendChild(popupHeading);
         popup.setAttribute('id', 'towers-popup');
-        popup.style.visibility = 'hidden';
+        // popup.style.visibility = 'hidden';
         popup.classList.add('popup-menu');
         //each tower will be 5% of the total width of the canvas + some space for margins
-        popup.style.width = Math.floor(towers.length * 0.08 * gameCanvas.width + gameCanvas.width * 0.05) + 'px'; 
+        popup.style.width = Math.floor(towers.length * 0.141 * gameCanvas.width) + 'px';
+        popup.style.left = (gameCanvas.width - Math.floor(towers.length * 0.141 * gameCanvas.width))/2 +'px';
         // popup.setAttribute('width', Math.floor(towers.length * gameCanvas.width * 0.05 + gameCanvas.width * 0.05));
-        console.log("Popup calculations")
-        console.log(towers.length)
-        console.log(gameAreaEl.width)
 
         //append all sprites for the available towers to the popup
         for (let tower of towers) {
-            popup.appendChild(tower.uiImage);
+            let towerContainer = document.createElement('div');
+            let towerPrice = document.createElement('span');
+            let towerName = document.createElement('span');
+
+            towerName.classList.add('tower-ui-name');
+            towerName.innerText = tower.name;
+            towerPrice.classList.add('tower-ui-price');
+            towerPrice.innerText = 'Cost: ' + tower.price;
+
+            tower.uiImage.style.display = 'block';
+            towerContainer.classList.add('tower-ui-container');
+            towerContainer.appendChild(towerName);
+            towerContainer.appendChild(tower.uiImage);
+            towerContainer.appendChild(towerPrice);
+            popup.appendChild(towerContainer);
         }
         gameAreaEl.appendChild(popup);
 

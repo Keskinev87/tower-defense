@@ -12,6 +12,7 @@ class Tower {
 
         switch (type) {
             case 'archer': {
+                this.name = 'Archer tower';
                 this.damage = 10;
                 this.range = 0.1;
                 this.speed = 15;
@@ -21,10 +22,11 @@ class Tower {
                 this.uiImage.src = 'images/archer.png';
                 this.uiImage.id = this.type;
                 this.uiImage.width = width * 0.08 ;
-                this.uiImage.classList.add('tower-ui');
+                this.uiImage.classList.add('tower-ui-image');
                 break;
             }
             case 'magic': {
+                this.name = 'Magic tower';
                 this.damage = 25;
                 this.range = 0.15;
                 this.speed = 60;
@@ -34,7 +36,7 @@ class Tower {
                 this.uiImage.src = 'images/magic.png';
                 this.uiImage.id = this.type;
                 this.uiImage.width = width* 0.08;
-                this.uiImage.classList.add('tower-ui');
+                this.uiImage.classList.add('tower-ui-image');
                 break;
             }
         }
@@ -86,7 +88,7 @@ class Tower {
     }
 
     fireProjectile() {
-        let newProjectile = new Projectile(this.damage, this.centerX, this.centerY, this.currentTarget.x + width * 0.03, this.currentTarget.y + height * 0.08, this.currentTargetIndex);
+        let newProjectile = new Projectile(this.damage, this.centerX + 0.03 * width, this.centerY, this.currentTarget.x + width * 0.03, this.currentTarget.y + height * 0.08, this.currentTargetIndex);
 
         this.projectiles.push(newProjectile);
         

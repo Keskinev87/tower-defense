@@ -100,15 +100,41 @@ body{
     background-size:cover;
   }
 
-  
+   .popup-menu {
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    top: 30%;
+    height: 40%;
+    z-index: 5;
+    font-size: 2vw;
+    /* margin-left: -80px; */
+  }
 
-  .tower-ui {
+  .popup-heading {
+    display: block;
+  }
+
+  .tower-ui-container {
+    display: inline-block;
+    text-align: center;
+    margin-right: 5%;
+  }
+
+  .tower-ui-image {
     /* the tower is in the popup. The user has to click to build it */
-    display: inline;
-    z-index: 3;
-    padding: 1%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     opacity: 0.5;
     filter: alpha(opacity=50); /* For IE8 and earlier */
+    cursor: pointer;
+  }
+
+  .tower-ui-price, .tower-ui-name {
+    display: block;
   }
 
   .tower {
@@ -136,17 +162,7 @@ body{
   } */
   
   /* The actual popup */
-  .popup .popup-menu {
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    /* margin-left: -80px; */
-  }
+ 
   
   /* Popup arrow */
   /* .popup .popup-menu::after {

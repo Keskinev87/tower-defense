@@ -5,7 +5,7 @@ var data = {
     waves: [
         [
             [{type:'spider', count: 20, health: 20,speed: 4},{type:'grunt',count: 10,health: 100, speed:2}],
-            [{type:'spider', count: 20, health: 20,speed: 4},{type:'grunt',count: 10,health: 100, speed:2}],
+            [{type:'grunt',count: 10,health: 100, speed:2}, {type:'knight', count: 5,health: 200,speed: 2}],
             [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
             [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
             [{type:'spider', count: 20, health: 20,speed: 3},{type:'grunt',count: 10,health: 100, speed:2},{type:'knight', count: 5,health: 200,speed: 2}],
