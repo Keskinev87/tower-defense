@@ -78,6 +78,12 @@
             map.drawMap();
         })
 
+        document.addEventListener('orientationchange', function(){
+          resizeGame();
+          if(map)
+            map.drawMap();
+        })
+
         resizeGame();
         document.getElementById('loader-background').style.visibility = '';
         loadResources().then(() => {
