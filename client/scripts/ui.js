@@ -160,7 +160,7 @@ class UserInterface {
         // popup.style.visibility = 'hidden';
         popup.classList.add('popup-menu');
         //each tower will be 5% of the total width of the canvas + some space for margins
-        popup.style.width = towers.length * 0.141 * 100 + '%';
+        popup.style.width = '50%';
         console.log("Popup width")
         console.log(Math.floor(towers.length * 0.141) * 100)
         popup.style.left = (gameCanvas.width - Math.floor(towers.length * 0.141 * gameCanvas.width))/(2*width) * 100 +'%';
